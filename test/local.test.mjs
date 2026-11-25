@@ -8,7 +8,8 @@ import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
 import { CompactSign, exportJWK, generateKeyPair } from "jose";
 import { verifyAuthority, authorityInput } from "../lib/authority.mjs";
 import { getDeadlines, deadlinesInput } from "../lib/deadlines.mjs";
-import { createFeeLookup } from "../lib/fees.mjs";
+import { createFeeLookup, feeInput } from "../lib/fees.mjs";
+import feeSnapshot from "../lib/fee-snapshot.json" with { type: "json" };
 import { draftSs4, ss4Input } from "../lib/ss4.mjs";
 import metadata from "../package.json" with { type: "json" };
 import bundled from "../cli-members.json" with { type: "json" };
@@ -108,23 +109,72 @@ test("dates use stated transaction facts, calendar rules and first/next actual s
   assert.equal(federal(2025, { calendarYearUnderIrsRule: "no" }).status, "calendar_year_required");
 });
 
-test("fee lookup requires qualified-shaped rows and adds integer cents without invented defaults", () => {
-  const source = "https://example.invalid/synthetic-fee";
-  const fixture = {
-    sourceCommit: "a".repeat(40), sourceSha256: "b".repeat(64), asOf: "2026-11-25",
-    states: [{
-      state: "AK", conditions: "Synthetic test fixture. No actual price.",
-      formation: { label: "fixture initial", cents: 12, source },
-      firstYearOtherMandatory: [{ label: "fixture recurring", cents: 34, source }],
-    }],
-  };
-  const lookup = createFeeLookup(fixture);
-  assert.equal(lookup({ state: "AK" }).firstYearStateTotalCents, 46);
-  assert.equal(lookup({ state: "DE" }).status, "unsupported_state");
-  assert.equal("firstYearStateTotalCents" in lookup({ state: "DE" }), false);
-  assert.throws(() => createFeeLookup(null));
-  assert.throws(() => createFeeLookup({ ...fixture, states: [...fixture.states, ...fixture.states] }));
-  assert.throws(() => createFeeLookup({ ...fixture, states: [{ ...fixture.states[0], formation: { label: "missing" } }] }));
+const fees = createFeeLookup(feeSnapshot);
+const fee = (state, fields = {}) => fees(feeInput.parse({ state, formationDate: "2027-06-01", ...fields }));
+
+test("dated fee schedule covers 51 formation routes and uses Tennessee's member count", () => {
+  assert.equal(feeSnapshot.asOf, "2026-11-25");
+  assert.equal(feeSnapshot.formation.length, 51);
+  assert.equal(new Set(feeSnapshot.formation.map(row => row.state)).size, 51);
+  for (const [state, cents, method] of [
+    ["DE", 11000, "document_upload"], ["KS", 8500, "online"], ["GA", 10500, "online"],
+    ["AL", 22500, "mail"], ["IN", 10000, "mail"], ["NE", 11000, "mail"], ["HI", 5100, "online"], ["VT", 15500, "online"],
+  ]) {
+    assert.equal(fee(state).formation.cents, cents);
+    assert.equal(fee(state).formation.method, method);
+  }
+  assert.deepEqual(fee("AL").formation.components.map(row => row.cents), [20000, 2500]);
+  assert.deepEqual([1, 6, 7, 20].map(memberCount => fee("TN", { memberCount }).formation.cents), [30000, 30000, 35000, 100000]);
+  assert.equal(fee("TN", { memberCount: 7 }).formation.formula.maximumCents, 300000);
+  assert.equal(fee("TN").formation.cents, null);
+  assert.equal(fee("TN").formation.reason, "member_count_required");
+  assert.equal(fee("TN", { memberCount: 21 }).formation.cents, null);
+  assert.equal(fee("TN", { memberCount: 21 }).formation.reason, "unsupported_member_count");
+  assert.equal(feeInput.safeParse({ state: "TN", formationDate: "2027-06-01", memberCount: 0 }).success, false);
+  assert.throws(() => createFeeLookup({ ...feeSnapshot, formation: Array(51).fill(feeSnapshot.formation[0]) }));
+});
+
+test("Delaware includes its June 1 tax only through the inclusive anniversary", () => {
+  const before = fee("DE", { formationDate: "2027-05-31" });
+  assert.equal(before.firstYearStateTotalCents, 11000);
+  assert.deepEqual(before.firstYear.window, { from: "2027-05-31", through: "2028-05-31", inclusive: true });
+  assert.equal(before.firstYear.scheduledCharges[0].inWindowCents, 0);
+  assert.equal(before.firstYear.scheduledCharges[0].stateChargeCents, 40000);
+  assert.equal(before.firstYear.scheduledCharges[0].status, "due_after_window");
+  const at = fee("DE");
+  assert.equal(at.firstYear.window.through, "2028-06-01");
+  assert.equal(at.firstYear.scheduledCharges[0].dueDate, "2028-06-01");
+  assert.equal(at.firstYear.scheduledCharges[0].inWindowCents, 40000);
+  assert.equal(at.firstYearStateTotalCents, 51000);
+  assert.ok(at.excludes.includes("EIN.LLC service fees"));
+});
+
+test("Wyoming uses exact qualifying assets and withholds unqualified totals", () => {
+  assert.equal(fee("WY", { wyomingAssetsCents: 0 }).firstYearStateTotalCents, 16000);
+  assert.equal(fee("WY", { wyomingAssetsCents: 29_999_999 }).firstYearStateTotalCents, 16000);
+  assert.equal(fee("WY", { wyomingAssetsCents: 30_000_000 }).firstYearStateTotalCents, 16000);
+  const assets = fee("WY", { formationDate: "2027-09-15", wyomingAssetsCents: 100_000_000 });
+  assert.equal(assets.firstYear.scheduledCharges[0].dueDate, "2028-09-01");
+  assert.equal(assets.firstYear.scheduledCharges[0].inWindowCents, 20000);
+  assert.equal(assets.firstYearStateTotalCents, 30000);
+  assert.equal(fee("WY", { wyomingAssetsCents: 30_005_000 }).firstYearStateTotalCents, 16001);
+  const fraction = fee("WY", { wyomingAssetsCents: 30_000_001 });
+  assert.equal(fraction.firstYearStateTotalCents, null);
+  assert.deepEqual(fraction.firstYear.missing, ["official_rounding_required"]);
+  assert.equal(fee("WY").firstYearStateTotalCents, null);
+  assert.deepEqual(fee("WY").firstYear.missing, ["qualifying_wyoming_assets_required"]);
+  for (const state of ["NM", "FL", "TN", "CA", "NV"]) {
+    assert.equal(fee(state).firstYearStateTotalCents, null);
+    assert.equal(fee(state).firstYear.coverage, "unknown");
+    assert.ok(fee(state).firstYear.missing.length > 0);
+  }
+  const leap = fee("DE", { formationDate: "2028-02-29" });
+  assert.equal(leap.formation.cents, 11000);
+  assert.equal(leap.firstYearStateTotalCents, null);
+  assert.equal(fee("DE", { formationDate: "2026-11-24" }).status, "historical_date_not_covered");
+  assert.equal(feeInput.safeParse({ state: "DE", formationDate: "2027-02-29" }).success, false);
+  assert.equal(feeInput.safeParse({ state: "DE" }).success, false);
+  assert.equal(feeInput.safeParse({ state: "ZZ", formationDate: "2027-06-01" }).success, false);
 });
 
 test("letter uses signature, schema, signed dates and scope, with live authority unknown", async () => {
@@ -178,9 +228,16 @@ test("installed stdio receives initialize, all local tools, failure recovery and
     await client.connect(transport, { timeout: 60_000 });
     assert.deepEqual(client.getServerVersion(), { name: "ein-llc-local", version: metadata.version });
     const list = await client.listTools();
-    assert.deepEqual(list.tools.map(t => t.name).sort(), ["draft_ss4", "get_compliance_deadlines", "verify_authority_letter"]);
+    assert.deepEqual(list.tools.map(t => t.name).sort(), ["draft_ss4", "get_compliance_deadlines", "get_state_fees", "verify_authority_letter"]);
     assert.ok(list.tools.every(t => t.annotations.readOnlyHint && !t.annotations.openWorldHint));
     const call = (name, args) => client.callTool({ name, arguments: args });
+    const de = { state: "DE", formationDate: "2027-06-01" };
+    assert.equal((await call("get_state_fees", de)).structuredContent.firstYearStateTotalCents, 51000);
+    assert.equal((await call("get_state_fees", { ...de, formationDate: "2027-02-29" })).isError, true);
+    assert.equal((await call("get_state_fees", { ...de, formationDate: "2027-05-31" })).structuredContent.firstYearStateTotalCents, 11000);
+    assert.equal((await call("get_state_fees", { ...de, state: "WY", wyomingAssetsCents: 100_000_000 })).structuredContent.firstYearStateTotalCents, 30000);
+    assert.equal((await call("get_state_fees", { ...de, state: "TN", memberCount: 7 })).structuredContent.formation.cents, 35000);
+    assert.equal((await call("get_state_fees", { ...de, state: "FL" })).structuredContent.firstYearStateTotalCents, null);
     const first = await call("draft_ss4", ss4);
     assert.equal(first.structuredContent.lines["1"], ss4.legalName);
     assert.equal((await call("draft_ss4", { ...ss4, businessStart: "2026-13-01" })).isError, true);
