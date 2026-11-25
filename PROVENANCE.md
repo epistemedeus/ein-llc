@@ -1,0 +1,7 @@
+# Provenance
+
+The CLI is version 0.2.2, from source commit `2322e6b8afa2916bb326f5454fbf78126d6c3a99`, tree `591908fb1e2824c9a7019f696386b2fd21d45973`. Its qualified npm archive SHA-256 is `d56cfbfd25578b463bd63b03c6391aebe454b393cc39ff00d1c4bd5970c3682b`. [The member manifest](cli-members.json) records exact bundled bytes and the two upstream README files omitted from this distribution. The original CLI, generated files, vendored runtimes and their license notices are unchanged.
+
+The stdio adapter launches [Supergateway 4.3.0](https://github.com/supercorp-ai/supergateway/tree/0afe993496636bb30dc1eb6810dc4d18f0f66f42) (MIT, Node.js 20 or later), with its [official MCP TypeScript SDK 1.32.2](https://github.com/modelcontextprotocol/typescript-sdk/tree/3b73021a0a2272c0c04c3917bcdb03398b3ec63f) runtime. The shrinkwrap pins the dependency closure and registry integrity. The gateway handles MCP, HTTP sessions, SSE and reconnection. The wrapper passes arguments through to the original CLI, with standalone `--version` as an alias for its `version` command. It restricts bridge fetches to the fixed HTTPS endpoint with redirects refused.
+
+The bridge forwards tool requests to EIN.LLC. Grant and approval rules are enforced there. Use a trusted MCP client and provide business context only to the intended service. If a request fails after sending, resolve its outcome before manually trying it again. The local tests exercise recovery on a new session without replaying the failed call. Use `npm ci --ignore-scripts` and `npm test` to run them.

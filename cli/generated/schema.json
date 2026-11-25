@@ -1,0 +1,993 @@
+{
+  "$comment": "Generated from src/manifest.mjs by scripts/generate.mjs. Do not edit.",
+  "manifestVersion": "ein-llc.cli.manifest.v1",
+  "cliVersion": "0.2.2",
+  "envelope": "ein-llc.cli.v1",
+  "schemaSources": {
+    "openapi": "https://ein.llc/api/agent/v1/openapi.json",
+    "catalog": "https://ein.llc/api/v1/service-catalog",
+    "localValidators": "ein-formation-http-client client.mjs (validateAssessmentInput, validateApplicationId)"
+  },
+  "hosted": {
+    "origin": "https://ein.llc",
+    "observedOn": "2026-11-12",
+    "catalogVersion": "2026-10-01",
+    "openapiInfoVersion": "2026-09-12.1",
+    "statuses": {
+      "served": "Route is in the live service catalog and OpenAPI.",
+      "served_unlisted": "Route answers but is not part of the documented contract.",
+      "local": "No request.",
+      "human_only": "A human step on the site. The CLI refuses it."
+    },
+    "notServed": [
+      "x402 paid endpoint (catalog notOfferedOnThisOrigin)",
+      "quote_service API (catalog notOfferedOnThisOrigin)",
+      "explain_requirement API (catalog notOfferedOnThisOrigin)",
+      "agent cancel of an application (no such route; task cancel is local)",
+      "agent claim, checkout, payment, signing or filing",
+      "agent issue or revoke of status grants (human owner only)"
+    ]
+  },
+  "exitCodes": {
+    "ok": 0,
+    "internal": 1,
+    "input": 2,
+    "auth": 3,
+    "unavailable": 4,
+    "response": 5,
+    "unknown_outcome": 6,
+    "not_found": 7
+  },
+  "errorCodes": {
+    "invalid_input": "input",
+    "secret_field_rejected": "input",
+    "body_limit": "input",
+    "conflict": "input",
+    "unknown_command": "input",
+    "unknown_flag": "input",
+    "missing_input": "input",
+    "not_in_slice": "input",
+    "effect_not_confirmed": "input",
+    "recovery_record_unavailable": "input",
+    "continuation_permissions": "input",
+    "continuation_unreadable": "input",
+    "continuation_absent": "input",
+    "continuation_cancelled": "input",
+    "unsupported_continuation": "input",
+    "task_mismatch": "input",
+    "task_payload_mismatch": "input",
+    "customer_mismatch": "input",
+    "lane_refused": "input",
+    "transport_mismatch": "input",
+    "recipient_required": "input",
+    "recipient_changed": "input",
+    "not_assessed": "input",
+    "not_prepared": "input",
+    "prepare_refused": "input",
+    "task_input_required": "input",
+    "identity_changed": "input",
+    "assessment_expired": "input",
+    "assessment_already_bound": "input",
+    "missing_grant": "auth",
+    "invalid_grant": "auth",
+    "insufficient_scope": "auth",
+    "grant_origin_mismatch": "auth",
+    "grant_file_unsafe": "auth",
+    "grant_malformed": "auth",
+    "origin_mismatch": "auth",
+    "human_step_required": "auth",
+    "funded_step_refused": "auth",
+    "unavailable": "unavailable",
+    "rate_limited": "unavailable",
+    "timeout": "unavailable",
+    "deadline_exceeded": "unavailable",
+    "invalid_response": "response",
+    "output_limit": "response",
+    "capability_unavailable": "response",
+    "unsupported_schema": "response",
+    "contract_mismatch": "response",
+    "unsupported_terms": "response",
+    "unsupported_route": "response",
+    "unsupported_state": "response",
+    "terms_changed": "response",
+    "redirect_refused": "response",
+    "unknown_outcome": "unknown_outcome",
+    "not_found": "not_found",
+    "public_client_missing": "internal",
+    "continuation_client_missing": "internal",
+    "client_error": "internal",
+    "internal_error": "internal"
+  },
+  "globalFlags": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "origin": {
+        "type": "string",
+        "description": "API origin, scheme and host only (default EIN_LLC_ORIGIN or https://ein.llc). http is allowed only for loopback."
+      },
+      "timeout-ms": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 60000,
+        "description": "Per-request deadline (default 15000, max 60000)."
+      },
+      "max-response-bytes": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 4194304,
+        "description": "Per-response bound (default 1048576, max 4194304)."
+      },
+      "retries": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 3,
+        "description": "Bounded retries for read-only GETs on unavailable or rate_limited (default 0, backoff 250 ms doubling)."
+      },
+      "correlation-id": {
+        "type": "string",
+        "pattern": "^ae:corr:v1:[A-Za-z0-9_-]{22}$",
+        "description": "Optional non-authorizing correlation id (Agent Entry task-continuation v1 format). Echoed as correlationId; never sent to the server, never a credential."
+      },
+      "json": {
+        "type": "boolean",
+        "description": "Machine output. Already the default; accepted for clarity."
+      },
+      "help": {
+        "type": "boolean",
+        "description": "Show help for the command."
+      }
+    },
+    "required": []
+  },
+  "commands": [
+    {
+      "command": "help",
+      "group": "meta",
+      "summary": "List commands. With --json, the machine-readable command index.",
+      "operationId": null,
+      "openapiOperationId": null,
+      "effect": "local_only",
+      "auth": "none",
+      "hosted": "local",
+      "task": "meta.help",
+      "wire": [],
+      "recovery": {
+        "class": "local",
+        "promise": "No request."
+      },
+      "http": null,
+      "args": [
+        {
+          "name": "command",
+          "required": false,
+          "description": "Command to describe."
+        }
+      ],
+      "flags": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {},
+        "required": []
+      },
+      "output": {
+        "envelope": "ein-llc.cli.v1"
+      }
+    },
+    {
+      "command": "version",
+      "group": "meta",
+      "summary": "CLI, manifest and envelope versions.",
+      "operationId": null,
+      "openapiOperationId": null,
+      "effect": "local_only",
+      "auth": "none",
+      "hosted": "local",
+      "task": "meta.version",
+      "wire": [],
+      "recovery": {
+        "class": "local",
+        "promise": "No request."
+      },
+      "http": null,
+      "args": [],
+      "flags": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {},
+        "required": []
+      },
+      "output": {
+        "envelope": "ein-llc.cli.v1"
+      }
+    },
+    {
+      "command": "schema",
+      "group": "meta",
+      "summary": "Input/output contract of one command, or the whole manifest.",
+      "operationId": null,
+      "openapiOperationId": null,
+      "effect": "local_only",
+      "auth": "none",
+      "hosted": "local",
+      "task": "meta.schema",
+      "wire": [],
+      "recovery": {
+        "class": "local",
+        "promise": "No request."
+      },
+      "http": null,
+      "args": [
+        {
+          "name": "command",
+          "required": false,
+          "description": "Command name, for example `ein-route` or `compliance deadlines`."
+        }
+      ],
+      "flags": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {},
+        "required": []
+      },
+      "output": {
+        "envelope": "ein-llc.cli.v1"
+      }
+    },
+    {
+      "command": "capabilities",
+      "group": "discovery",
+      "summary": "Read the live service catalog and OpenAPI contract and map them to these commands.",
+      "operationId": null,
+      "openapiOperationId": null,
+      "effect": "read_only",
+      "auth": "none",
+      "hosted": "served",
+      "task": "discovery.capabilities",
+      "wire": [
+        {
+          "component": "catalog",
+          "id": "list_agent_business_services"
+        },
+        {
+          "component": "openapi",
+          "id": "getFormationContract"
+        }
+      ],
+      "recovery": {
+        "class": "read_retry",
+        "promise": "Read-only GET. Bounded retry with --retries."
+      },
+      "http": [
+        {
+          "method": "GET",
+          "path": "/api/v1/service-catalog",
+          "operationId": "list_agent_business_services"
+        },
+        {
+          "method": "GET",
+          "path": "/api/agent/v1/openapi.json",
+          "openapiOperationId": "getFormationContract"
+        }
+      ],
+      "args": [],
+      "flags": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "offline": {
+            "type": "boolean",
+            "description": "Manifest only. No network."
+          }
+        },
+        "required": []
+      },
+      "output": {
+        "envelope": "ein-llc.cli.v1"
+      }
+    },
+    {
+      "command": "compare-states",
+      "group": "knowledge",
+      "summary": "Compare sourced LLC state fees.",
+      "operationId": "compare_states",
+      "openapiOperationId": "compareStates",
+      "effect": "read_only",
+      "auth": "none",
+      "hosted": "served",
+      "task": "knowledge.compare_states",
+      "wire": [
+        {
+          "component": "catalog",
+          "id": "compare_states"
+        },
+        {
+          "component": "openapi",
+          "id": "compareStates"
+        }
+      ],
+      "recovery": {
+        "class": "read_retry",
+        "promise": "Read-only GET. Bounded retry with --retries."
+      },
+      "http": {
+        "method": "GET",
+        "path": "/api/agent/v1/compare-states"
+      },
+      "args": [],
+      "flags": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {},
+        "required": []
+      },
+      "output": {
+        "envelope": "ein-llc.cli.v1"
+      }
+    },
+    {
+      "command": "ein-route",
+      "group": "knowledge",
+      "summary": "Explain the IRS EIN channel for these facts.",
+      "operationId": "explain_ein_route",
+      "openapiOperationId": "explainEinRoute",
+      "effect": "read_only",
+      "auth": "none",
+      "hosted": "served",
+      "task": "knowledge.ein_route",
+      "wire": [
+        {
+          "component": "catalog",
+          "id": "explain_ein_route"
+        },
+        {
+          "component": "openapi",
+          "id": "explainEinRoute"
+        }
+      ],
+      "recovery": {
+        "class": "read_retry",
+        "promise": "Read-only GET. Bounded retry with --retries."
+      },
+      "http": {
+        "method": "GET",
+        "path": "/api/agent/v1/ein-route"
+      },
+      "args": [],
+      "flags": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "has-ssn-or-itin": {
+            "type": "boolean",
+            "x-query-param": "hasSsnOrItin",
+            "description": "Responsible party has an SSN or ITIN."
+          },
+          "principal-business-in-us": {
+            "type": "boolean",
+            "x-query-param": "principalBusinessInUs",
+            "description": "Principal place of business is in the United States."
+          }
+        },
+        "required": [
+          "has-ssn-or-itin",
+          "principal-business-in-us"
+        ]
+      },
+      "output": {
+        "envelope": "ein-llc.cli.v1"
+      }
+    },
+    {
+      "command": "compliance deadlines",
+      "group": "knowledge",
+      "summary": "Read dated compliance obligations. --format ics returns the same obligations as a bounded iCalendar string.",
+      "operationId": "get_compliance_deadlines",
+      "openapiOperationId": "getComplianceDeadlines",
+      "effect": "read_only",
+      "auth": "none",
+      "hosted": "served",
+      "task": "knowledge.compliance_deadlines",
+      "wire": [
+        {
+          "component": "catalog",
+          "id": "get_compliance_deadlines"
+        },
+        {
+          "component": "openapi",
+          "id": "getComplianceDeadlines"
+        },
+        {
+          "component": "catalog",
+          "id": "get_compliance_calendar",
+          "variant": "ics"
+        },
+        {
+          "component": "openapi",
+          "id": "getComplianceCalendar",
+          "variant": "ics"
+        }
+      ],
+      "recovery": {
+        "class": "read_retry",
+        "promise": "Read-only GET. Bounded retry with --retries."
+      },
+      "http": {
+        "method": "GET",
+        "path": "/api/agent/v1/compliance-deadlines"
+      },
+      "variants": {
+        "ics": {
+          "operationId": "get_compliance_calendar",
+          "openapiOperationId": "getComplianceCalendar",
+          "http": {
+            "method": "GET",
+            "path": "/api/agent/v1/compliance.ics"
+          },
+          "contentType": "text/calendar"
+        }
+      },
+      "args": [],
+      "flags": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "entity-type": {
+            "type": "string",
+            "enum": [
+              "single-member-llc",
+              "multi-member-llc",
+              "corporation"
+            ],
+            "x-query-param": "entityType"
+          },
+          "owner-residency": {
+            "type": "string",
+            "enum": [
+              "foreign",
+              "us"
+            ],
+            "x-query-param": "ownerResidency"
+          },
+          "formation-state": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "x-query-param": "formationState"
+          },
+          "formation-date": {
+            "type": "string",
+            "format": "date",
+            "x-query-param": "formationDate",
+            "description": "YYYY-MM-DD."
+          },
+          "reportable-transactions": {
+            "type": "string",
+            "enum": [
+              "yes",
+              "no",
+              "unknown"
+            ],
+            "x-query-param": "reportableTransactions"
+          },
+          "part-v-transactions": {
+            "type": "string",
+            "enum": [
+              "yes",
+              "no",
+              "unknown"
+            ],
+            "x-query-param": "partVTransactions"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "json",
+              "ics"
+            ],
+            "default": "json",
+            "description": "json (default) or ics."
+          }
+        },
+        "required": [
+          "entity-type",
+          "owner-residency",
+          "formation-state",
+          "formation-date"
+        ]
+      },
+      "output": {
+        "envelope": "ein-llc.cli.v1"
+      }
+    },
+    {
+      "command": "assess",
+      "group": "formation",
+      "summary": "Assess a formation need. Without --yes or --confirm-effect it only previews the request (exit 0, nothing sent). With a task file the result is stored in the existing 0600 continuation record.",
+      "operationId": "assess_formation_need",
+      "openapiOperationId": "assessFormation",
+      "effect": "anonymous_record_write",
+      "effectNote": "When sent, the server stores an assessment record. No account, payment, filing or checkout.",
+      "dispatch": "explicit_confirmation",
+      "auth": "none",
+      "hosted": "served",
+      "task": "formation.assess",
+      "wire": [
+        {
+          "component": "catalog",
+          "id": "assess_formation_need"
+        },
+        {
+          "component": "openapi",
+          "id": "assessFormation"
+        },
+        {
+          "component": "activation-continuation",
+          "id": "assess",
+          "when": "task file"
+        },
+        {
+          "component": "ein-formation-http-client",
+          "id": "FormationHttpClient.assess",
+          "when": "no task file"
+        }
+      ],
+      "recovery": {
+        "class": "no_reconciliation_route",
+        "promise": "No caller key exists for assessments and a lost reply cannot be read back. The outcome stays unknown (exit 6). Assessing again deliberately creates another anonymous assessment record (no application, payment or filing).",
+        "persistedBeforeDispatch": "With a task file: origin, task id and operation id (continuation discover record). No request key exists to persist."
+      },
+      "http": {
+        "method": "POST",
+        "path": "/api/agent/v1/assessments"
+      },
+      "args": [],
+      "flags": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "dry-run": {
+            "type": "boolean",
+            "description": "Preview only. Wins over --yes."
+          },
+          "yes": {
+            "type": "boolean",
+            "description": "Confirm this command's effect (anonymous_record_write)."
+          },
+          "confirm-effect": {
+            "type": "string",
+            "enum": [
+              "anonymous_record_write",
+              "provisional_application_write"
+            ],
+            "description": "Confirm by naming the exact effect."
+          },
+          "input": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "description": "Read JSON from this file instead of stdin."
+          },
+          "task-file": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "description": "Continuation record (mode 0600). Default EIN_CONTINUATION_FILE. Omit for a stateless assessment."
+          }
+        },
+        "required": []
+      },
+      "input": {
+        "source": "stdin_or_file",
+        "maxBytes": 32768,
+        "schemaRef": "openapi#/components/schemas/AssessmentInput",
+        "localValidator": "validateAssessmentInput",
+        "note": "With --task-file, the recipient goes in --intended-email, not in the JSON."
+      },
+      "output": {
+        "envelope": "ein-llc.cli.v1"
+      }
+    },
+    {
+      "command": "prepare",
+      "group": "formation",
+      "summary": "Bound prepare for the task's stored assessment, recipient and operation id, through tools/activation-continuation. Previews unless confirmed. Stops before the human claim.",
+      "operationId": "prepare_application",
+      "openapiOperationId": "prepareApplication",
+      "effect": "provisional_application_write",
+      "effectNote": "Creates or recovers one provisional application bound to assessmentId + intendedEmail + operationId. No claim, checkout, payment, filing or signing.",
+      "dispatch": "explicit_confirmation",
+      "auth": "none",
+      "hosted": "served",
+      "task": "formation.prepare_for_human_claim",
+      "wire": [
+        {
+          "component": "catalog",
+          "id": "prepare_application"
+        },
+        {
+          "component": "openapi",
+          "id": "prepareApplication"
+        },
+        {
+          "component": "activation-continuation",
+          "id": "prepare"
+        }
+      ],
+      "recovery": {
+        "class": "caller_key_idempotent_replay",
+        "promise": "operationId task:<taskId> is a caller-chosen key. Per the live OpenAPI PrepareInput.operationId contract, replaying the same assessment, recipient and stored preparation returns the original application and claim token without writing again, within the server's (unpublished) retention.",
+        "persistedBeforeDispatch": "origin, operationId and the bound body {assessmentId, intendedEmail, operationId}, written to the 0600 task file by the continuation client before the POST. ein-llc checks the record before it calls the continuation client (a refusal leaves the task file unchanged and sends nothing) and again before the request leaves.",
+        "survives": "Process restart while the task file and its storage remain. Not host or storage loss."
+      },
+      "http": {
+        "method": "POST",
+        "path": "/api/agent/v1/applications"
+      },
+      "args": [],
+      "flags": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "yes": {
+            "type": "boolean",
+            "description": "Confirm this command's effect (provisional_application_write)."
+          },
+          "confirm-effect": {
+            "type": "string",
+            "enum": [
+              "anonymous_record_write",
+              "provisional_application_write"
+            ],
+            "description": "Confirm by naming the exact effect."
+          },
+          "task-file": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "description": "Continuation record (mode 0600). Default EIN_CONTINUATION_FILE."
+          },
+          "intended-email": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 320,
+            "description": "Human recipient who will claim. Default EIN_CONTINUATION_INTENDED_EMAIL."
+          }
+        },
+        "required": []
+      },
+      "output": {
+        "envelope": "ein-llc.cli.v1"
+      }
+    },
+    {
+      "command": "task show",
+      "group": "task",
+      "summary": "Show the stored task record (redacted view from tools/activation-continuation). No network.",
+      "operationId": null,
+      "openapiOperationId": null,
+      "effect": "local_read",
+      "auth": "none",
+      "hosted": "local",
+      "task": "task.show",
+      "wire": [
+        {
+          "component": "activation-continuation",
+          "id": "show"
+        }
+      ],
+      "recovery": {
+        "class": "local",
+        "promise": "No request."
+      },
+      "http": null,
+      "args": [],
+      "flags": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "task-file": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "description": "Default EIN_CONTINUATION_FILE."
+          }
+        },
+        "required": []
+      },
+      "output": {
+        "envelope": "ein-llc.cli.v1"
+      }
+    },
+    {
+      "command": "task resume",
+      "group": "task",
+      "summary": "Recover after a lost prepare reply. Without confirmation it sends nothing and reports the stored operation id. With confirmation it sends one replay of that same bound operation (same operationId and body). Stops before the human claim.",
+      "operationId": "prepare_application",
+      "openapiOperationId": "prepareApplication",
+      "effect": "provisional_application_write",
+      "effectNote": "Replays only the stored bound prepare (same assessmentId, intendedEmail, operationId). Never a new operation id.",
+      "dispatch": "explicit_confirmation",
+      "auth": "none",
+      "hosted": "served",
+      "task": "task.resume",
+      "wire": [
+        {
+          "component": "catalog",
+          "id": "prepare_application"
+        },
+        {
+          "component": "openapi",
+          "id": "prepareApplication"
+        },
+        {
+          "component": "activation-continuation",
+          "id": "resume"
+        }
+      ],
+      "recovery": {
+        "class": "caller_key_idempotent_replay",
+        "promise": "operationId task:<taskId> is a caller-chosen key. Per the live OpenAPI PrepareInput.operationId contract, replaying the same assessment, recipient and stored preparation returns the original application and claim token without writing again, within the server's (unpublished) retention.",
+        "persistedBeforeDispatch": "origin, operationId and the bound body {assessmentId, intendedEmail, operationId}, written to the 0600 task file by the continuation client before the POST. ein-llc checks the record before it calls the continuation client (a refusal leaves the task file unchanged and sends nothing) and again before the request leaves.",
+        "survives": "Process restart while the task file and its storage remain. Not host or storage loss."
+      },
+      "http": {
+        "method": "POST",
+        "path": "/api/agent/v1/applications"
+      },
+      "args": [],
+      "flags": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "yes": {
+            "type": "boolean",
+            "description": "Confirm the replay (provisional_application_write)."
+          },
+          "confirm-effect": {
+            "type": "string",
+            "enum": [
+              "anonymous_record_write",
+              "provisional_application_write"
+            ],
+            "description": "Confirm by naming the exact effect."
+          },
+          "task-file": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "description": "Default EIN_CONTINUATION_FILE."
+          },
+          "intended-email": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 320,
+            "description": "Default EIN_CONTINUATION_INTENDED_EMAIL."
+          }
+        },
+        "required": []
+      },
+      "output": {
+        "envelope": "ein-llc.cli.v1"
+      }
+    },
+    {
+      "command": "task cancel",
+      "group": "task",
+      "summary": "Cancel the local task record only. The EIN.LLC protocol has no agent cancel; the server case, if any, is not cancelled.",
+      "operationId": null,
+      "openapiOperationId": null,
+      "effect": "local_write",
+      "auth": "none",
+      "hosted": "local",
+      "task": "task.cancel_local",
+      "wire": [
+        {
+          "component": "activation-continuation",
+          "id": "cancel"
+        }
+      ],
+      "recovery": {
+        "class": "local",
+        "promise": "No request."
+      },
+      "http": null,
+      "args": [],
+      "flags": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "task-file": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "description": "Default EIN_CONTINUATION_FILE."
+          }
+        },
+        "required": []
+      },
+      "output": {
+        "envelope": "ein-llc.cli.v1"
+      }
+    },
+    {
+      "command": "status",
+      "group": "formation",
+      "summary": "Read redacted application status with a human-issued grant from EIN_AGENT_GRANT or EIN_AGENT_GRANT_FILE, sent only to EIN_AGENT_GRANT_ORIGIN.",
+      "operationId": "get_application_status",
+      "openapiOperationId": "getApplicationStatus",
+      "effect": "read_only",
+      "auth": "agent_grant",
+      "hosted": "served",
+      "task": "formation.status",
+      "wire": [
+        {
+          "component": "catalog",
+          "id": "get_application_status"
+        },
+        {
+          "component": "openapi",
+          "id": "getApplicationStatus"
+        },
+        {
+          "component": "ein-formation-http-client",
+          "id": "FormationHttpClient.status"
+        }
+      ],
+      "recovery": {
+        "class": "read_retry",
+        "promise": "Read-only GET with a human-issued grant."
+      },
+      "http": {
+        "method": "GET",
+        "path": "/api/agent/v1/applications/{applicationId}/status"
+      },
+      "args": [],
+      "flags": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "application-id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "description": "Application id."
+          }
+        },
+        "required": [
+          "application-id"
+        ]
+      },
+      "output": {
+        "envelope": "ein-llc.cli.v1"
+      }
+    },
+    {
+      "command": "doctor",
+      "group": "meta",
+      "summary": "Check health, origin, grant presence (never values) and task file safety.",
+      "operationId": null,
+      "openapiOperationId": null,
+      "effect": "read_only",
+      "auth": "none",
+      "hosted": "served_unlisted",
+      "task": "meta.doctor",
+      "wire": [
+        {
+          "component": "http",
+          "id": "GET /api/healthz",
+          "listed": false
+        }
+      ],
+      "recovery": {
+        "class": "read_retry",
+        "promise": "Read-only GET. Bounded retry with --retries."
+      },
+      "http": {
+        "method": "GET",
+        "path": "/api/healthz"
+      },
+      "args": [],
+      "flags": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "task-file": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "description": "Default EIN_CONTINUATION_FILE."
+          }
+        },
+        "required": []
+      },
+      "output": {
+        "envelope": "ein-llc.cli.v1"
+      }
+    },
+    {
+      "command": "claim",
+      "group": "human_only",
+      "summary": "Always refused (human_step_required). The intended recipient claims at the review URL.",
+      "operationId": null,
+      "openapiOperationId": null,
+      "effect": "human_only",
+      "auth": "human_only",
+      "hosted": "human_only",
+      "task": "human.claim",
+      "wire": [
+        {
+          "component": "catalog",
+          "id": "request_operator_action"
+        },
+        {
+          "component": "openapi",
+          "id": "claimApplication",
+          "authority": "human (FirebaseIdToken)"
+        }
+      ],
+      "recovery": {
+        "class": "not_dispatched",
+        "promise": "Refused locally; nothing is sent."
+      },
+      "http": null,
+      "args": [],
+      "flags": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "task-file": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "description": "Default EIN_CONTINUATION_FILE; used only to show the review URL."
+          }
+        },
+        "required": []
+      },
+      "output": {
+        "envelope": "ein-llc.cli.v1"
+      }
+    },
+    {
+      "command": "checkout",
+      "group": "human_only",
+      "summary": "Always refused (funded_step_refused). Checkout and payment are human-only.",
+      "operationId": null,
+      "openapiOperationId": null,
+      "effect": "human_only",
+      "auth": "human_only",
+      "hosted": "human_only",
+      "task": "human.checkout",
+      "wire": [
+        {
+          "component": "catalog",
+          "id": "request_operator_action",
+          "payment": "human-checkout"
+        }
+      ],
+      "recovery": {
+        "class": "not_dispatched",
+        "promise": "Refused locally; nothing is sent."
+      },
+      "http": null,
+      "args": [],
+      "flags": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "task-file": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "description": "Default EIN_CONTINUATION_FILE; used only to show the review URL."
+          }
+        },
+        "required": []
+      },
+      "output": {
+        "envelope": "ein-llc.cli.v1"
+      }
+    }
+  ]
+}

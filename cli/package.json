@@ -1,0 +1,26 @@
+{
+  "name": "ein-llc",
+  "version": "0.2.2",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "description": "EIN.LLC command line for discovering formation options, preparing an application for human review, and reading status with a grant.",
+  "bin": {
+    "ein-llc": "./bin/ein-llc.mjs"
+  },
+  "man": [
+    "./generated/man/ein-llc.1"
+  ],
+  "files": [
+    "bin",
+    "src",
+    "generated",
+    "vendor",
+    "SKILL.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "homepage": "https://ein.llc"
+}

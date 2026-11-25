@@ -1,0 +1,257 @@
+.\" Generated from src/manifest.mjs by scripts/generate.mjs; do not edit.
+.TH EIN\-LLC 1 "" "ein-llc 0.2.2" "User Commands"
+.SH NAME
+ein\-llc \- agent\-native EIN.LLC command line
+.SH SYNOPSIS
+.B ein\-llc
+.I command
+[\fIflags\fR]
+.SH DESCRIPTION
+Writes one versioned JSON envelope (ein\-llc.cli.v1) on stdout and diagnostics on stderr. Never prompts. Writes preview locally unless confirmed with \-\-yes or \-\-confirm\-effect. Claim, checkout, payment, signing and filing are human\-only and refused.
+.SH COMMANDS
+.TP
+.B help
+List commands. With \-\-json, the machine\-readable command index.
+.br
+Effect: local_only. Auth: none. Hosted: local. Recovery: local.
+.TP
+.B version
+CLI, manifest and envelope versions.
+.br
+Effect: local_only. Auth: none. Hosted: local. Recovery: local.
+.TP
+.B schema
+Input/output contract of one command, or the whole manifest.
+.br
+Effect: local_only. Auth: none. Hosted: local. Recovery: local.
+.TP
+.B capabilities
+Read the live service catalog and OpenAPI contract and map them to these commands.
+.br
+Effect: read_only. Auth: none. Hosted: served. Recovery: read_retry.
+.br
+Route: undefined undefined
+.br
+  \-\-offline  Manifest only. No network.
+.TP
+.B compare\-states
+Compare sourced LLC state fees.
+.br
+Effect: read_only. Auth: none. Hosted: served. Recovery: read_retry.
+.br
+Route: GET /api/agent/v1/compare\-states
+.TP
+.B ein\-route
+Explain the IRS EIN channel for these facts.
+.br
+Effect: read_only. Auth: none. Hosted: served. Recovery: read_retry.
+.br
+Route: GET /api/agent/v1/ein\-route
+.br
+  \-\-has\-ssn\-or\-itin true|false  Responsible party has an SSN or ITIN.
+.br
+  \-\-principal\-business\-in\-us true|false  Principal place of business is in the United States.
+.TP
+.B compliance deadlines
+Read dated compliance obligations. \-\-format ics returns the same obligations as a bounded iCalendar string.
+.br
+Effect: read_only. Auth: none. Hosted: served. Recovery: read_retry.
+.br
+Route: GET /api/agent/v1/compliance\-deadlines
+.br
+  \-\-entity\-type single\-member\-llc|multi\-member\-llc|corporation
+.br
+  \-\-owner\-residency foreign|us
+.br
+  \-\-formation\-state VALUE
+.br
+  \-\-formation\-date YYYY\-MM\-DD  YYYY\-MM\-DD.
+.br
+  \-\-reportable\-transactions yes|no|unknown
+.br
+  \-\-part\-v\-transactions yes|no|unknown
+.br
+  \-\-format json|ics  json (default) or ics.
+.TP
+.B assess
+Assess a formation need. Without \-\-yes or \-\-confirm\-effect it only previews the request (exit 0, nothing sent). With a task file the result is stored in the existing 0600 continuation record.
+.br
+Effect: anonymous_record_write. Auth: none. Hosted: served. Recovery: no_reconciliation_route.
+.br
+Route: POST /api/agent/v1/assessments
+.br
+  \-\-dry\-run  Preview only. Wins over \-\-yes.
+.br
+  \-\-yes  Confirm this command's effect (anonymous_record_write).
+.br
+  \-\-confirm\-effect anonymous_record_write|provisional_application_write  Confirm by naming the exact effect.
+.br
+  \-\-input VALUE  Read JSON from this file instead of stdin.
+.br
+  \-\-task\-file VALUE  Continuation record (mode 0600). Default EIN_CONTINUATION_FILE. Omit for a stateless assessment.
+.TP
+.B prepare
+Bound prepare for the task's stored assessment, recipient and operation id, through tools/activation\-continuation. Previews unless confirmed. Stops before the human claim.
+.br
+Effect: provisional_application_write. Auth: none. Hosted: served. Recovery: caller_key_idempotent_replay.
+.br
+Route: POST /api/agent/v1/applications
+.br
+  \-\-yes  Confirm this command's effect (provisional_application_write).
+.br
+  \-\-confirm\-effect anonymous_record_write|provisional_application_write  Confirm by naming the exact effect.
+.br
+  \-\-task\-file VALUE  Continuation record (mode 0600). Default EIN_CONTINUATION_FILE.
+.br
+  \-\-intended\-email VALUE  Human recipient who will claim. Default EIN_CONTINUATION_INTENDED_EMAIL.
+.TP
+.B task show
+Show the stored task record (redacted view from tools/activation\-continuation). No network.
+.br
+Effect: local_read. Auth: none. Hosted: local. Recovery: local.
+.br
+  \-\-task\-file VALUE  Default EIN_CONTINUATION_FILE.
+.TP
+.B task resume
+Recover after a lost prepare reply. Without confirmation it sends nothing and reports the stored operation id. With confirmation it sends one replay of that same bound operation (same operationId and body). Stops before the human claim.
+.br
+Effect: provisional_application_write. Auth: none. Hosted: served. Recovery: caller_key_idempotent_replay.
+.br
+Route: POST /api/agent/v1/applications
+.br
+  \-\-yes  Confirm the replay (provisional_application_write).
+.br
+  \-\-confirm\-effect anonymous_record_write|provisional_application_write  Confirm by naming the exact effect.
+.br
+  \-\-task\-file VALUE  Default EIN_CONTINUATION_FILE.
+.br
+  \-\-intended\-email VALUE  Default EIN_CONTINUATION_INTENDED_EMAIL.
+.TP
+.B task cancel
+Cancel the local task record only. The EIN.LLC protocol has no agent cancel; the server case, if any, is not cancelled.
+.br
+Effect: local_write. Auth: none. Hosted: local. Recovery: local.
+.br
+  \-\-task\-file VALUE  Default EIN_CONTINUATION_FILE.
+.TP
+.B status
+Read redacted application status with a human\-issued grant from EIN_AGENT_GRANT or EIN_AGENT_GRANT_FILE, sent only to EIN_AGENT_GRANT_ORIGIN.
+.br
+Effect: read_only. Auth: agent_grant. Hosted: served. Recovery: read_retry.
+.br
+Route: GET /api/agent/v1/applications/{applicationId}/status
+.br
+  \-\-application\-id VALUE  Application id.
+.TP
+.B doctor
+Check health, origin, grant presence (never values) and task file safety.
+.br
+Effect: read_only. Auth: none. Hosted: served_unlisted. Recovery: read_retry.
+.br
+Route: GET /api/healthz
+.br
+  \-\-task\-file VALUE  Default EIN_CONTINUATION_FILE.
+.TP
+.B claim
+Always refused (human_step_required). The intended recipient claims at the review URL.
+.br
+Effect: human_only. Auth: human_only. Hosted: human_only. Recovery: not_dispatched.
+.br
+  \-\-task\-file VALUE  Default EIN_CONTINUATION_FILE; used only to show the review URL.
+.TP
+.B checkout
+Always refused (funded_step_refused). Checkout and payment are human\-only.
+.br
+Effect: human_only. Auth: human_only. Hosted: human_only. Recovery: not_dispatched.
+.br
+  \-\-task\-file VALUE  Default EIN_CONTINUATION_FILE; used only to show the review URL.
+.SH GLOBAL FLAGS
+.TP
+.B \-\-origin VALUE
+API origin, scheme and host only (default EIN_LLC_ORIGIN or https://ein.llc). http is allowed only for loopback.
+.TP
+.B \-\-timeout\-ms N
+Per\-request deadline (default 15000, max 60000).
+.TP
+.B \-\-max\-response\-bytes N
+Per\-response bound (default 1048576, max 4194304).
+.TP
+.B \-\-retries N
+Bounded retries for read\-only GETs on unavailable or rate_limited (default 0, backoff 250 ms doubling).
+.TP
+.B \-\-correlation\-id VALUE
+Optional non\-authorizing correlation id (Agent Entry task\-continuation v1 format). Echoed as correlationId; never sent to the server, never a credential.
+.TP
+.B \-\-json
+Machine output. Already the default; accepted for clarity.
+.TP
+.B \-\-help
+Show help for the command.
+.SH EXIT STATUS
+.TP
+.B 0
+ok
+.TP
+.B 1
+internal: public_client_missing, continuation_client_missing, client_error, internal_error
+.TP
+.B 2
+input: invalid_input, secret_field_rejected, body_limit, conflict, unknown_command, unknown_flag, missing_input, not_in_slice, effect_not_confirmed, recovery_record_unavailable, continuation_permissions, continuation_unreadable, continuation_absent, continuation_cancelled, unsupported_continuation, task_mismatch, task_payload_mismatch, customer_mismatch, lane_refused, transport_mismatch, recipient_required, recipient_changed, not_assessed, not_prepared, prepare_refused, task_input_required, identity_changed, assessment_expired, assessment_already_bound
+.TP
+.B 3
+auth: missing_grant, invalid_grant, insufficient_scope, grant_origin_mismatch, grant_file_unsafe, grant_malformed, origin_mismatch, human_step_required, funded_step_refused
+.TP
+.B 4
+unavailable: unavailable, rate_limited, timeout, deadline_exceeded
+.TP
+.B 5
+response: invalid_response, output_limit, capability_unavailable, unsupported_schema, contract_mismatch, unsupported_terms, unsupported_route, unsupported_state, terms_changed, redirect_refused
+.TP
+.B 6
+unknown_outcome: unknown_outcome
+.TP
+.B 7
+not_found: not_found
+.SH ENVIRONMENT
+.TP
+.B EIN_LLC_ORIGIN
+API origin (default https://ein.llc).
+.TP
+.B EIN_CONTINUATION_FILE
+Task record path (mode 0600); same as \-\-task\-file.
+.TP
+.B EIN_CONTINUATION_CUSTOMER_KEY
+Opaque caller key, 12 to 128 characters; stored only as a hash.
+.TP
+.B EIN_CONTINUATION_TASK_ID
+Stable task id; otherwise read from the record or generated on first assess.
+.TP
+.B EIN_CONTINUATION_INTENDED_EMAIL
+Human recipient who will claim; same as \-\-intended\-email.
+.TP
+.B EIN_CONTINUATION_REASSESS
+Set to 1 to assess again deliberately after a lost assess reply.
+.TP
+.B EIN_AGENT_GRANT
+Human\-issued status grant (value never printed).
+.TP
+.B EIN_AGENT_GRANT_FILE
+File holding the grant (mode 0600).
+.TP
+.B EIN_AGENT_GRANT_ORIGIN
+Origin the grant may be sent to; must exactly equal the request origin (default https://ein.llc).
+.SH NOT SERVED
+.IP \(bu 2
+x402 paid endpoint (catalog notOfferedOnThisOrigin)
+.IP \(bu 2
+quote_service API (catalog notOfferedOnThisOrigin)
+.IP \(bu 2
+explain_requirement API (catalog notOfferedOnThisOrigin)
+.IP \(bu 2
+agent cancel of an application (no such route; task cancel is local)
+.IP \(bu 2
+agent claim, checkout, payment, signing or filing
+.IP \(bu 2
+agent issue or revoke of status grants (human owner only)
+.SH SEE ALSO
+ein\-llc help, ein\-llc schema, https://ein.llc/api/agent/v1/openapi.json
