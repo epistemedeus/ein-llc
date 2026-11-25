@@ -1,0 +1,666 @@
+{
+  "asOf": "2026-11-25",
+  "formation": [
+    {
+      "state": "AL",
+      "name": "Alabama",
+      "method": "mail",
+      "sources": [
+        "https://www.sos.alabama.gov/business-entities/llcs",
+        "https://www.sos.alabama.gov/sites/default/files/2022-09/domesticEntityNameReservation.pdf",
+        "https://www.sos.alabama.gov/sites/default/files/form-files/FeeSchedule.pdf"
+      ],
+      "cents": 22500,
+      "components": [
+        {
+          "name": "Certificate of formation",
+          "cents": 20000
+        },
+        {
+          "name": "Required paper name reservation",
+          "cents": 2500
+        }
+      ],
+      "conditions": "Mail the name reservation first and attach the returned certificate to the formation filing."
+    },
+    {
+      "state": "AK",
+      "name": "Alaska",
+      "method": "online",
+      "sources": [
+        "https://www.commerce.alaska.gov/web/cbpl/Corporations/CorporationFormsFees.aspx"
+      ],
+      "cents": 25000,
+      "coverageGaps": [
+        "Initial report and subsequent report charges and dates in the first year"
+      ]
+    },
+    {
+      "state": "AZ",
+      "name": "Arizona",
+      "method": "mail",
+      "sources": [
+        "https://azcc.gov/docs/default-source/corps-files/instructions/l010i-instructions-articles-of-organization.pdf",
+        "https://azcc.gov/faqs/BusinessServicesFAQs"
+      ],
+      "cents": 5000,
+      "coverageGaps": [
+        "Address-dependent publication charges",
+        "Other mandatory first-year filing or tax charges"
+      ]
+    },
+    {
+      "state": "AR",
+      "name": "Arkansas",
+      "method": "online",
+      "sources": [
+        "https://www.sos.arkansas.gov/business-commercial-services-bcs/forms-fees/llc"
+      ],
+      "cents": 4500
+    },
+    {
+      "state": "CA",
+      "name": "California",
+      "method": "online",
+      "sources": [
+        "https://bpd.cdn.sos.ca.gov/llc/forms/llc-1.pdf",
+        "https://www.sos.ca.gov/business-programs/cannabizfile/cannabis-forms-and-fees/limited-liability-companies-llc-california"
+      ],
+      "cents": 7000,
+      "coverageGaps": [
+        "Complete first-year state tax coverage and initial Statement of Information timing and costs"
+      ]
+    },
+    {
+      "state": "CO",
+      "name": "Colorado",
+      "method": "online",
+      "sources": [
+        "https://www.coloradosos.gov/pubs/info_center/fees/business.html"
+      ],
+      "cents": 5000
+    },
+    {
+      "state": "CT",
+      "name": "Connecticut",
+      "method": "online",
+      "sources": [
+        "https://business.ct.gov/knowledge-base/articles/submit-paper-filings?language=en_US",
+        "https://business.ct.gov/-/media/businessonestop/bsd_forms/certificate_of_organization-fillable.pdf"
+      ],
+      "cents": 12000
+    },
+    {
+      "state": "DE",
+      "name": "Delaware",
+      "method": "document_upload",
+      "sources": [
+        "https://corpfiles.delaware.gov/LLC_Forms/LLC%20Formation.pdf",
+        "https://corpfiles.delaware.gov/Fee_Schedule/AugustFee2026.pdf",
+        "https://corp.delaware.gov/document-upload-service-information/"
+      ],
+      "cents": 11000,
+      "conditions": "Upload the signed Delaware Certificate of Formation."
+    },
+    {
+      "state": "DC",
+      "name": "District of Columbia",
+      "method": "online",
+      "sources": [
+        "https://dlcp.dc.gov/page/corporations-division-fees-limited-liability-company"
+      ],
+      "cents": 9900,
+      "coverageGaps": [
+        "Applicable licensing and first-year or biennial reporting charges"
+      ]
+    },
+    {
+      "state": "FL",
+      "name": "Florida",
+      "method": "online",
+      "sources": [
+        "https://www.flsenate.gov/Laws/Statutes/2025/605.0213",
+        "https://dos.fl.gov/sunbiz/forms/fees/llc-fees/"
+      ],
+      "cents": 12500,
+      "components": [
+        {
+          "name": "Articles of organization",
+          "cents": 10000
+        },
+        {
+          "name": "Registered agent designation filing",
+          "cents": 2500
+        }
+      ],
+      "coverageGaps": [
+        "Complete first-year obligations beyond the sourced annual report charges, including when the first report comes due"
+      ]
+    },
+    {
+      "state": "GA",
+      "name": "Georgia",
+      "method": "online",
+      "sources": [
+        "https://sos.ga.gov/sites/default/files/2025-07/corp-filing_procedure-limited_liability_company.pdf",
+        "https://sos.ga.gov/sites/default/files/forms/Reference%20-%20Filing%20Fees%20%28Effective%209.6.2025%29.pdf"
+      ],
+      "cents": 10500,
+      "components": [
+        {
+          "name": "Articles of organization",
+          "cents": 10000
+        },
+        {
+          "name": "Mandatory electronic service charge",
+          "cents": 500
+        }
+      ],
+      "coverageGaps": [
+        "First annual registration amount and applicable deadline"
+      ]
+    },
+    {
+      "state": "HI",
+      "name": "Hawaii",
+      "method": "online",
+      "sources": [
+        "https://cca.hawaii.gov/breg/registration/dllc/0/"
+      ],
+      "cents": 5100,
+      "components": [
+        {
+          "name": "Articles of organization",
+          "cents": 5000
+        },
+        {
+          "name": "Mandatory State Archives fee",
+          "cents": 100
+        }
+      ]
+    },
+    {
+      "state": "ID",
+      "name": "Idaho",
+      "method": "online",
+      "sources": [
+        "https://archive.sos.idaho.gov/CORP/forms/LLC/LLC%20Cert%20Org.pdf"
+      ],
+      "cents": 10000
+    },
+    {
+      "state": "IL",
+      "name": "Illinois",
+      "method": "online",
+      "sources": [
+        "https://www.ilsos.gov/publications/business-services/llc.html",
+        "https://www.ilsos.gov/departments/business-services/organization/llc-instructions.html"
+      ],
+      "cents": 15000
+    },
+    {
+      "state": "IN",
+      "name": "Indiana",
+      "method": "mail",
+      "sources": [
+        "https://forms.in.gov/Download.aspx?id=5674",
+        "https://inbiz.in.gov/start-business"
+      ],
+      "cents": 10000
+    },
+    {
+      "state": "IA",
+      "name": "Iowa",
+      "method": "online",
+      "sources": [
+        "https://sos.iowa.gov/businesses/business-entity-forms-and-fees",
+        "https://help.sos.iowa.gov/how-do-i-form-llc"
+      ],
+      "cents": 5000,
+      "coverageGaps": [
+        "Applicable biennial report amount and whether due in this window"
+      ]
+    },
+    {
+      "state": "KS",
+      "name": "Kansas",
+      "method": "online",
+      "sources": [
+        "https://sos.ks.gov/forms/business_services/DL.pdf",
+        "https://www.sos.ks.gov/media/press-releases/2026/05-26-26-secretary-of-state-reduces-fees-for-kansans.html"
+      ],
+      "cents": 8500
+    },
+    {
+      "state": "KY",
+      "name": "Kentucky",
+      "method": "online",
+      "sources": [
+        "https://web.sos.ky.gov/forms/corp/KLC-Articles%20of%20Organization-Profit%20Limited%20Liability%20Company.pdf",
+        "https://apps.legislature.ky.gov/law/Statutes/statute.aspx?id=40419"
+      ],
+      "cents": 4000,
+      "coverageGaps": [
+        "Any required county filing expense",
+        "Other mandatory first-year filing or tax charges"
+      ]
+    },
+    {
+      "state": "LA",
+      "name": "Louisiana",
+      "method": "online",
+      "sources": [
+        "https://www.sos.la.gov/BusinessServices/PublishedDocuments/365ArticlesofOrganizationLouisianaLimitedLiabilityCompany.pdf",
+        "https://www.sos.la.gov/BusinessServices/FileBusinessDocuments/Pages/default.aspx"
+      ],
+      "cents": 10000,
+      "conditions": "The initial report accompanies the articles. This is the published state charge."
+    },
+    {
+      "state": "ME",
+      "name": "Maine",
+      "method": "mail",
+      "sources": [
+        "https://legislature.maine.gov/statutes/31/title31sec1680.html",
+        "https://mobile.maine.gov/sos/corporations-commissions/i-need-a-business-form/limited-liability-company-forms"
+      ],
+      "cents": 17500
+    },
+    {
+      "state": "MD",
+      "name": "Maryland",
+      "method": "mail",
+      "sources": [
+        "https://dat.maryland.gov/Documents/Accessible%20Documents/Charter%20-%20Create%20or%20Start%20a%20Business/Articles%20of%20Organization%20for%20a%20Limited%20Liability%20Company_0526-A.pdf"
+      ],
+      "cents": 10000
+    },
+    {
+      "state": "MA",
+      "name": "Massachusetts",
+      "method": "mail",
+      "sources": [
+        "https://www.sec.state.ma.us/divisions/corporations/download/Fee_Schedule.pdf",
+        "https://www.sec.state.ma.us/divisions/corporations/pdf-html/950_cmr_112_limited_liability_companies.htm"
+      ],
+      "cents": 50000,
+      "coverageGaps": [
+        "First annual report amount and applicable deadline"
+      ]
+    },
+    {
+      "state": "MI",
+      "name": "Michigan",
+      "method": "online",
+      "sources": [
+        "https://www.michigan.gov/lara/bureau-list/cscl/corps/forms/limited-liability-company-forms"
+      ],
+      "cents": 5000
+    },
+    {
+      "state": "MN",
+      "name": "Minnesota",
+      "method": "online",
+      "sources": [
+        "https://www.sos.mn.gov/business-liens/business-filing-and-certification-fee-schedule/"
+      ],
+      "cents": 15500
+    },
+    {
+      "state": "MS",
+      "name": "Mississippi",
+      "method": "online",
+      "sources": [
+        "https://www.sos.ms.gov/sites/default/files/fees_and_forms/Services%20%26%20Fees%20Document.pdf"
+      ],
+      "cents": 5000
+    },
+    {
+      "state": "MO",
+      "name": "Missouri",
+      "method": "online",
+      "sources": [
+        "https://www.sos.mo.gov/CMSImages/Business/fees.pdf?v=2025",
+        "https://www.sos.mo.gov/business/corporations/faqs"
+      ],
+      "cents": 5000
+    },
+    {
+      "state": "MT",
+      "name": "Montana",
+      "method": "online",
+      "sources": [
+        "https://sosmt.gov/Business/fees/"
+      ],
+      "cents": 3500
+    },
+    {
+      "state": "NE",
+      "name": "Nebraska",
+      "method": "mail",
+      "sources": [
+        "https://sos.nebraska.gov/business-services/forms-and-fee-information"
+      ],
+      "cents": 11000,
+      "coverageGaps": [
+        "Mandatory newspaper publication cost",
+        "Separate proof-of-publication and other applicable filing costs"
+      ]
+    },
+    {
+      "state": "NV",
+      "name": "Nevada",
+      "method": "online",
+      "sources": [
+        "https://www.leg.state.nv.us/nrs/nrs-086.html",
+        "https://www.leg.state.nv.us/nrs/nrs-076.html"
+      ],
+      "cents": 42500,
+      "components": [
+        {
+          "name": "Articles of organization",
+          "cents": 7500
+        },
+        {
+          "name": "Initial list",
+          "cents": 15000
+        },
+        {
+          "name": "Initial state business license for a nonexempt LLC",
+          "cents": 20000
+        }
+      ],
+      "conditions": "The stated initial list and business license amounts are for an ordinary nonexempt LLC."
+    },
+    {
+      "state": "NH",
+      "name": "New Hampshire",
+      "method": "mail",
+      "sources": [
+        "https://sos.nh.gov/media/btrcez0p/form_llc-1_-10-2018.pdf",
+        "https://www.sos.nh.gov/corporations-0/forms-and-fees/limited-liability-companies"
+      ],
+      "cents": 10000
+    },
+    {
+      "state": "NJ",
+      "name": "New Jersey",
+      "method": "online",
+      "sources": [
+        "https://www.nj.gov/treasury/revenue/fees.shtml",
+        "https://www.nj.gov/treasury/revenue/gettingregistered.shtml"
+      ],
+      "cents": 12500,
+      "coverageGaps": [
+        "Separate state tax registration and first-year filing obligations"
+      ]
+    },
+    {
+      "state": "NM",
+      "name": "New Mexico",
+      "method": "online",
+      "sources": [
+        "https://www.nmlegis.gov/publications/New_Mexico_State_Government/index_to_revenue_sources_2008.pdf",
+        "https://www.sos.nm.gov/business-services/statutes-governing-business-in-nm/",
+        "https://enterprise.sos.nm.gov/forms/business/"
+      ],
+      "cents": 5000,
+      "conditions": "The state portal lists the online route. The official legislative revenue index documents the amount; the transaction total was not independently visible in the portal.",
+      "coverageGaps": [
+        "Current affirmative official coverage for first-year reports, filing charges and ordinary state assessments"
+      ]
+    },
+    {
+      "state": "NY",
+      "name": "New York",
+      "method": "online",
+      "sources": [
+        "https://dos.ny.gov/forming-limited-liability-company-new-york"
+      ],
+      "cents": 20000,
+      "coverageGaps": [
+        "Mandatory publication cost",
+        "Separate Certificate of Publication and other applicable filing costs"
+      ]
+    },
+    {
+      "state": "NC",
+      "name": "North Carolina",
+      "method": "online",
+      "sources": [
+        "https://www.sosnc.gov/fees/",
+        "https://www.sosnc.gov/documents/forms/Business_Registration/limited_liability_companies/articles_of_organization.pdf"
+      ],
+      "cents": 12500
+    },
+    {
+      "state": "ND",
+      "name": "North Dakota",
+      "method": "online",
+      "sources": [
+        "https://www.sos.nd.gov/business/business-services/business-structures/limited-liability-company-llc"
+      ],
+      "cents": 13500
+    },
+    {
+      "state": "OH",
+      "name": "Ohio",
+      "method": "online",
+      "sources": [
+        "https://www.ohiosos.gov/business/business-filing-forms"
+      ],
+      "cents": 9900
+    },
+    {
+      "state": "OK",
+      "name": "Oklahoma",
+      "method": "online",
+      "sources": [
+        "https://oklahoma.gov/sos/businesses/business-services/forms.html",
+        "https://oklahoma.gov/content/dam/ok/en/sos/documents/businesses/forms/Fm0074.pdf"
+      ],
+      "cents": 10000
+    },
+    {
+      "state": "OR",
+      "name": "Oregon",
+      "method": "online",
+      "sources": [
+        "https://sos.oregon.gov/business/Documents/business-registry-forms/br-fee-schedule.pdf"
+      ],
+      "cents": 10000
+    },
+    {
+      "state": "PA",
+      "name": "Pennsylvania",
+      "method": "online",
+      "sources": [
+        "https://www.pa.gov/agencies/dos/programs/business/fees-and-payments"
+      ],
+      "cents": 12500
+    },
+    {
+      "state": "RI",
+      "name": "Rhode Island",
+      "method": "online",
+      "sources": [
+        "https://www.sos.ri.gov/divisions/business-services/ri-business/start-your-rhode-island-business"
+      ],
+      "cents": 15000,
+      "coverageGaps": [
+        "Minimum annual tax and whether other first-year charges apply"
+      ]
+    },
+    {
+      "state": "SC",
+      "name": "South Carolina",
+      "method": "online",
+      "sources": [
+        "https://www.scstatehouse.gov/code/t33c044"
+      ],
+      "cents": 11000
+    },
+    {
+      "state": "SD",
+      "name": "South Dakota",
+      "method": "online",
+      "sources": [
+        "https://sdsos.gov/general-information/filing-fees.aspx"
+      ],
+      "cents": 15000
+    },
+    {
+      "state": "TN",
+      "name": "Tennessee",
+      "method": "mail",
+      "sources": [
+        "https://sos-prod.tnsosgovfiles.com/s3fs-public/document/ss-4270.pdf",
+        "https://tpucdockets.tn.gov/archive/filings/2007/0700074.pdf"
+      ],
+      "perMember": {
+        "rateCents": 5000,
+        "minimumCents": 30000,
+        "maximumCents": 300000,
+        "supportedMaxMembers": 20
+      }
+    },
+    {
+      "state": "TX",
+      "name": "Texas",
+      "method": "mail",
+      "sources": [
+        "https://www.sos.state.tx.us/corp/instructions/205.shtml"
+      ],
+      "cents": 30000
+    },
+    {
+      "state": "UT",
+      "name": "Utah",
+      "method": "online",
+      "sources": [
+        "https://commerce.utah.gov/corporations/business-entities/considerations-in-forming-a-limited-liability-company/",
+        "https://commerce.utah.gov/wp-content/uploads/2023/04/currentfees.pdf"
+      ],
+      "cents": 5900,
+      "conditions": "Based on the formation instructions and FY2026 schedule. A later official schedule was not confirmed."
+    },
+    {
+      "state": "VT",
+      "name": "Vermont",
+      "method": "online",
+      "sources": [
+        "https://legislature.vermont.gov/statutes/section/11/025/04012"
+      ],
+      "cents": 15500
+    },
+    {
+      "state": "VA",
+      "name": "Virginia",
+      "method": "online",
+      "sources": [
+        "https://www.scc.virginia.gov/businesses/forms-and-fees/virginia-limited-liability-companies/"
+      ],
+      "cents": 10000
+    },
+    {
+      "state": "WA",
+      "name": "Washington",
+      "method": "online",
+      "sources": [
+        "https://www.sos.wa.gov/sites/default/files/2025-06/6.2025%20-%20LLC%20-%20COF_0.pdf",
+        "https://www.sos.wa.gov/corporations-charities/frequently-asked-questions-faqs/online-filing-system-tools-resources"
+      ],
+      "cents": 20000,
+      "components": [
+        {
+          "name": "Articles of organization",
+          "cents": 18000
+        },
+        {
+          "name": "Mandatory online service fee",
+          "cents": 2000
+        }
+      ],
+      "conditions": "Include the initial report in the online formation. Filing the initial report separately is a different charge.",
+      "coverageGaps": [
+        "First-year charges after the initial report included with online formation"
+      ]
+    },
+    {
+      "state": "WV",
+      "name": "West Virginia",
+      "method": "online",
+      "sources": [
+        "https://sos.wv.gov/sites/default/files/2026-07/lld-1.pdf",
+        "https://tax.wv.gov/Business/BusinessRegistration/Pages/BusinessRegistration.aspx"
+      ],
+      "cents": 10000,
+      "coverageGaps": [
+        "Separate tax business registration and first-year filing obligations"
+      ]
+    },
+    {
+      "state": "WI",
+      "name": "Wisconsin",
+      "method": "online",
+      "sources": [
+        "https://dfi.wi.gov/Pages/BusinessServices/BusinessEntities/Fees.aspx"
+      ],
+      "cents": 13000
+    },
+    {
+      "state": "WY",
+      "name": "Wyoming",
+      "method": "mail",
+      "sources": [
+        "https://sos.wyo.gov/forms/business/llc/llc-articlesorganization.pdf",
+        "https://sos.wyo.gov/Business/docs/HowToCreateAWyomingCompany.pdf"
+      ],
+      "cents": 10000,
+      "conditions": "Mail the articles and payment to use this state rate."
+    }
+  ],
+  "annual": {
+    "DE": {
+      "name": "Delaware annual LLC tax",
+      "cents": 40000,
+      "method": "online",
+      "sources": [
+        "https://delcode.delaware.gov/title6/c018/sc11/index.html",
+        "https://corp.delaware.gov/alt-entitytaxinstructions/"
+      ]
+    },
+    "WY": {
+      "name": "Wyoming annual report license tax",
+      "minimumCents": 6000,
+      "assetCentsPerFeeCent": 5000,
+      "method": "mail",
+      "sources": [
+        "https://sos.wyo.gov/FAQS.aspx?root=BUS",
+        "https://wyobiz.wyo.gov/Business/AnnualReport.aspx"
+      ]
+    },
+    "FL": [
+      {
+        "period": "on-time",
+        "cents": 13875,
+        "method": "online",
+        "sources": [
+          "https://www.flsenate.gov/Laws/Statutes/2026/605.0212",
+          "https://www.flsenate.gov/Laws/Statutes/2026/605.0213",
+          "https://flsenate.gov/Laws/Statutes/2026/607.193",
+          "https://dos.fl.gov/sunbiz/manage-business/efile/annual-report/"
+        ]
+      },
+      {
+        "period": "late",
+        "cents": 53875,
+        "method": "online",
+        "sources": [
+          "https://flsenate.gov/Laws/Statutes/2026/607.193",
+          "https://dos.fl.gov/sunbiz/forms/fees/llc-fees/"
+        ]
+      }
+    ]
+  }
+}
