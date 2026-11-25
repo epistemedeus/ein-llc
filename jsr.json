@@ -1,0 +1,26 @@
+{
+  "name": "@epistemedeus/ein-llc",
+  "version": "0.3.0-alpha.1",
+  "license": "MIT",
+  "exports": {
+    ".": "./mod.ts"
+  },
+  "publish": {
+    "include": [
+      "mod.ts",
+      "lib/",
+      "package.json",
+      "LICENSE",
+      "README.md",
+      "PROVENANCE.md"
+    ]
+  },
+  "nodeModulesDir": "none",
+  "imports": {
+    "@modelcontextprotocol/sdk/server/mcp.js": "npm:@modelcontextprotocol/sdk@1.32.2/server/mcp.js",
+    "@modelcontextprotocol/sdk/server/stdio.js": "npm:@modelcontextprotocol/sdk@1.32.2/server/stdio.js",
+    "ajv/dist/2020.js": "npm:ajv@8.20.0/dist/2020.js",
+    "jose": "npm:jose@6.2.18",
+    "zod": "npm:zod@4.6.7"
+  }
+}

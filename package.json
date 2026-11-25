@@ -1,14 +1,33 @@
 {
   "name": "ein-llc",
-  "version": "0.2.2",
-  "description": "EIN.LLC CLI and stdio MCP adapter",
+  "version": "0.3.0-alpha.1",
+  "description": "Local tools for US LLC paperwork and the EIN.LLC CLI",
   "type": "module",
   "license": "MIT",
-  "engines": { "node": ">=22.12.0" },
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "homepage": "https://ein.llc",
   "repository": "github:epistemedeus/ein-llc",
-  "bin": { "ein-llc": "./bin/ein-llc.mjs" },
-  "files": ["bin", "lib", "cli", "cli-members.json", "PROVENANCE.md", "npm-shrinkwrap.json"],
-  "scripts": { "test": "node --test" },
-  "dependencies": { "supergateway": "4.3.0" }
+  "bin": {
+    "ein-llc": "./bin/ein-llc.mjs"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "cli",
+    "cli-members.json",
+    "mod.ts",
+    "PROVENANCE.md",
+    "npm-shrinkwrap.json"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "ajv": "8.20.0",
+    "jose": "6.2.18",
+    "zod": "4.6.7"
+  }
 }
