@@ -1,5 +1,7 @@
 # EIN.LLC local tools and CLI
 
+[![EIN LLC MCP server](https://glama.ai/mcp/servers/epistemedeus/ein-llc/badges/score.svg)](https://glama.ai/mcp/servers/epistemedeus/ein-llc)
+
 Prepare paperwork, plan state filing costs, check filing dates and verify signed letters on your machine. Once dependencies are installed, the local MCP server runs over stdio with no network connection, account or API key.
 
 | MCP tool | What you get |
