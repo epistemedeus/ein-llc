@@ -2,11 +2,11 @@
 /**
  * Thin n8n adapter for the four public ein-llc 0.3 local MCP tools.
  *
- * Reuses the official n8n community MCP Client node's STDIO wiring from
- * `n8n-nodes-mcp` (Client + StdioClientTransport + listTools + callTool
- * from `@modelcontextprotocol/sdk`). Starts the checkout stdio server
- * (`node bin/ein-llc.mjs`). No API key and no network are required for
- * the local tools.
+ * Reuses the maintained community `n8n-nodes-mcp` MCP Client node's
+ * Command Line (STDIO) wiring (Client + StdioClientTransport + listTools
+ * + callTool from `@modelcontextprotocol/sdk`). Starts the checkout
+ * stdio server (`node bin/ein-llc.mjs`). No API key and no network are
+ * required for the local tools.
  */
 import { existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";

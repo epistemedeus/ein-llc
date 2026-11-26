@@ -44,7 +44,8 @@ npm run example
 ```
 
 The example starts the checkout stdio server, invokes `get_state_fees`
-through the same STDIO `callTool` path as the n8n MCP Client node with
+through the same STDIO `callTool` path as the maintained community
+`n8n-nodes-mcp` MCP Client node with
 `{"state":"DE","formationDate":"2027-05-31"}`, and prints the dated
 first-year total. Delaware formation on May 31 has a $110 total through
 the first anniversary under the dated schedule

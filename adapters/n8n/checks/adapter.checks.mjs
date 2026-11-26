@@ -16,7 +16,7 @@ after(async () => {
   await session.close();
 });
 
-test("binds the four public ein-llc tools through the n8n MCP Client STDIO path", () => {
+test("binds the four public ein-llc tools through the maintained community n8n-nodes-mcp Command Line (STDIO) path", () => {
   assert.deepEqual(session.tools.map((tool) => tool.name).sort(), [...PUBLIC_TOOL_NAMES].sort());
   assert.equal(session.connectionType, "cmd");
   for (const tool of session.tools) {
