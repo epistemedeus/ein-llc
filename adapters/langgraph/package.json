@@ -1,0 +1,24 @@
+{
+  "name": "@ein-llc/langgraph-adapter",
+  "private": true,
+  "version": "0.0.0",
+  "description": "LangGraph adapter for the four public ein-llc 0.3 local MCP tools",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "main": "./index.mjs",
+  "exports": {
+    ".": "./index.mjs"
+  },
+  "scripts": {
+    "example": "node example.mjs",
+    "test": "node --test checks/adapter.checks.mjs"
+  },
+  "dependencies": {
+    "@langchain/core": "1.5.1",
+    "@langchain/langgraph": "1.7.5",
+    "@langchain/mcp-adapters": "2.0.3"
+  }
+}
