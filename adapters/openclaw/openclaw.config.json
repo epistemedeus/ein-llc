@@ -1,0 +1,20 @@
+{
+  "mcp": {
+    "servers": {
+      "ein-llc": {
+        "transport": "stdio",
+        "command": "node",
+        "args": ["bin/ein-llc.mjs"],
+        "cwd": "../..",
+        "toolFilter": {
+          "include": [
+            "get_state_fees",
+            "draft_ss4",
+            "get_compliance_deadlines",
+            "verify_authority_letter"
+          ]
+        }
+      }
+    }
+  }
+}
