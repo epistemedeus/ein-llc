@@ -1,0 +1,23 @@
+{
+  "name": "@ein-llc/vercel-ai-adapter",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Vercel AI SDK adapter for the four public ein-llc 0.3 local MCP tools",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "main": "./index.mjs",
+  "exports": {
+    ".": "./index.mjs"
+  },
+  "scripts": {
+    "example": "node example.mjs",
+    "test": "node --test checks/adapter.checks.mjs"
+  },
+  "dependencies": {
+    "@ai-sdk/mcp": "2.0.106",
+    "ai": "7.0.183"
+  }
+}
