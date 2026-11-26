@@ -61,6 +61,13 @@ export function includedToolNames(server) {
   return [...PUBLIC_TOOL_NAMES];
 }
 
+/**
+ * Resolve a stdio launch from an mcp.servers block. Relative `cwd` is
+ * resolved against the given config file's directory so the checkout-local
+ * `openclaw.config.json` works when this adapter loads it in place. That
+ * is this adapter's helper, not a proven OpenClaw config-dir semantic.
+ * Prefer absolute checkout `cwd` and `args` when configuring OpenClaw.
+ */
 export function resolveStdioLaunch(server, repoRoot = defaultRepoRoot(), configPath = openClawConfigPath()) {
   const configDir = dirname(configPath);
   const cwd = server.cwd

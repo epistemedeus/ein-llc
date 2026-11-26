@@ -39,14 +39,13 @@ from a registry install.
 The checked-in `openclaw.config.json` is a checkout-local official
 [`mcp.servers`](https://docs.openclaw.ai/tools/mcp) stdio definition:
 `command` is `node`, `args` is `["bin/ein-llc.mjs"]`, and `cwd` is `../..`
-(the ein-llc repo root, resolved from this file's directory), plus a
-`toolFilter.include` list for the four public tools. The adapter and the
-example load that file in place.
+(the ein-llc repo root relative to this file), plus a `toolFilter.include`
+list for the four public tools. The adapter and the example load that
+file in place.
 
 Do not paste those relative `cwd` and `args` values into OpenClaw's own
-config. OpenClaw resolves `cwd` from its config location, so a literal
-merge would point at the wrong directory. Use the official CLI with
-absolute checkout paths (adjust to your machine):
+config. The supported way to point OpenClaw at this checkout is the
+official CLI with absolute checkout paths (adjust to your machine):
 
 ```sh
 openclaw mcp add ein-llc \

@@ -56,7 +56,10 @@ test("invalid formationDate 2027-02-29 is refused by the existing tool schema", 
   assert.match(content, /Invalid ISO date at formationDate|-32602/);
 });
 
-test("a literal merge of relative cwd into a foreign OpenClaw config fails until cwd is rewritten", async () => {
+// This exercises this adapter's resolveStdioLaunch helper. It is not a
+// native OpenClaw mcp doctor run and does not prove OpenClaw's own
+// config-dir semantics.
+test("relative cwd from the checkout-local config misses the repo root when this adapter resolves a copy in another directory; absolute checkout cwd and args recover", async () => {
   const { server } = loadOpenClawMcpConfig();
   const foreignDir = mkdtempSync(join(tmpdir(), "ein-llc-openclaw-merge-"));
   const foreignPath = join(foreignDir, "openclaw.json");
