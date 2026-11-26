@@ -36,8 +36,17 @@ from a registry install.
 
 ## Point OpenClaw at the local server
 
-Merge `openclaw.config.json` into your OpenClaw config under `mcp.servers`, or
-add the server from the official CLI (adjust the checkout path):
+The checked-in `openclaw.config.json` is a checkout-local official
+[`mcp.servers`](https://docs.openclaw.ai/tools/mcp) stdio definition:
+`command` is `node`, `args` is `["bin/ein-llc.mjs"]`, and `cwd` is `../..`
+(the ein-llc repo root, resolved from this file's directory), plus a
+`toolFilter.include` list for the four public tools. The adapter and the
+example load that file in place.
+
+Do not paste those relative `cwd` and `args` values into OpenClaw's own
+config. OpenClaw resolves `cwd` from its config location, so a literal
+merge would point at the wrong directory. Use the official CLI with
+absolute checkout paths (adjust to your machine):
 
 ```sh
 openclaw mcp add ein-llc \
@@ -47,10 +56,21 @@ openclaw mcp add ein-llc \
 openclaw mcp doctor ein-llc --probe
 ```
 
-The saved definition uses stdio `command`, `args`, and `cwd`, plus a
-`toolFilter.include` list for the four public tools. You can also load the
-skill at `skills/ein-llc-local` into an OpenClaw skills directory
-(`openclaw skills install ./adapters/openclaw/skills/ein-llc-local`).
+`npm run example` prints the resolved `openclaw mcp add` line for this
+checkout. If you copy the `mcp.servers.ein-llc` block by hand, rewrite
+`cwd` to the absolute checkout root and keep or absolutize `args` so they
+still refer to this checkout's `bin/ein-llc.mjs`, then run
+`openclaw mcp doctor ein-llc --probe`.
+
+Load the checkout-local skill with the official local install command
+([`openclaw skills install ./path`](https://docs.openclaw.ai/tools/skills)):
+
+```sh
+openclaw skills install ./adapters/openclaw/skills/ein-llc-local
+```
+
+The skill is invocable as `/ein-llc-local`. It does not start the MCP
+server; configure `mcp.servers.ein-llc` first as above.
 
 ## Run the no-credential example
 

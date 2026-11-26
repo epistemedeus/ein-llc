@@ -5,10 +5,14 @@ description: Use the local ein-llc 0.3 MCP tools for state LLC fees, SS-4 drafts
 
 # ein-llc local tools
 
-These tools come from the checkout stdio MCP server defined in
-`adapters/openclaw/openclaw.config.json`. After root dependencies are
-installed, OpenClaw launches `node bin/ein-llc.mjs` with no network,
-account, or API key.
+This skill is invocable as `/ein-llc-local`. It does not start the MCP
+server. Configure OpenClaw `mcp.servers.ein-llc` first with a stdio
+command of `node`, `args` pointing at this ein-llc checkout's
+`bin/ein-llc.mjs`, and `cwd` set to the absolute checkout root. The
+adapter file `openclaw.config.json` is a checkout-local example; rewrite
+relative `cwd` (`../..`) before copying it into OpenClaw's own config.
+After root dependencies are installed, OpenClaw launches
+`node bin/ein-llc.mjs` with no network, account, or API key.
 
 Use only these four public tools:
 
