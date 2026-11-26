@@ -1,0 +1,22 @@
+{
+  "name": "@ein-llc/n8n-adapter",
+  "private": true,
+  "version": "0.0.0",
+  "description": "n8n adapter for the four public ein-llc 0.3 local MCP tools",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "main": "./index.mjs",
+  "exports": {
+    ".": "./index.mjs"
+  },
+  "scripts": {
+    "example": "node example.mjs",
+    "test": "node --test checks/adapter.checks.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2"
+  }
+}

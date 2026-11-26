@@ -1,0 +1,64 @@
+{
+  "name": "ein-llc 0.3 public tools via n8n-nodes-mcp STDIO",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "connectionType": "cmd",
+        "operation": "listTools"
+      },
+      "id": "list-public-tools",
+      "name": "List ein-llc tools",
+      "type": "n8n-nodes-mcp.mcpClient",
+      "typeVersion": 1,
+      "position": [260, 0],
+      "credentials": {
+        "mcpClientApi": {
+          "id": "ein-llc-stdio",
+          "name": "ein-llc 0.3 STDIO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "connectionType": "cmd",
+        "operation": "executeTool",
+        "toolName": "get_state_fees",
+        "toolParameters": "{\"state\":\"DE\",\"formationDate\":\"2027-05-31\"}"
+      },
+      "id": "delaware-fees",
+      "name": "Delaware first-year fees",
+      "type": "n8n-nodes-mcp.mcpClient",
+      "typeVersion": 1,
+      "position": [520, 0],
+      "credentials": {
+        "mcpClientApi": {
+          "id": "ein-llc-stdio",
+          "name": "ein-llc 0.3 STDIO"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [[{ "node": "List ein-llc tools", "type": "main", "index": 0 }]]
+    },
+    "List ein-llc tools": {
+      "main": [[{ "node": "Delaware first-year fees", "type": "main", "index": 0 }]]
+    }
+  },
+  "pinData": {},
+  "settings": { "executionOrder": "v1" },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "description": "Import after installing the n8n-nodes-mcp community node. Create an MCP Client (STDIO) API credential named “ein-llc 0.3 STDIO”: Command is your Node.js binary, Arguments is the absolute path to this checkout’s bin/ein-llc.mjs. The Delaware node calls get_state_fees for 2027-05-31 (firstYearStateTotalCents 11000)."
+  }
+}
