@@ -82,15 +82,12 @@ export async function invokePublicTool(session, name, args, callId = `call_${nam
 }
 
 export function parseToolContent(result) {
-  if (typeof result === "string") {
-    try {
-      return JSON.parse(result);
-    } catch {
-      return result;
-    }
+  if (result && typeof result === "object" && result.structuredContent != null) {
+    return result.structuredContent;
   }
-  if (Array.isArray(result)) {
-    const text = result
+  const parts = Array.isArray(result) ? result : result?.content;
+  if (Array.isArray(parts)) {
+    const text = parts
       .map((part) => (typeof part?.text === "string" ? part.text : ""))
       .join("");
     if (text) {
@@ -99,6 +96,13 @@ export function parseToolContent(result) {
       } catch {
         return text;
       }
+    }
+  }
+  if (typeof result === "string") {
+    try {
+      return JSON.parse(result);
+    } catch {
+      return result;
     }
   }
   if (result && typeof result === "object") {
@@ -123,16 +127,9 @@ export function parseToolContent(result) {
 export function isToolError(result) {
   if (!result) return false;
   if (result instanceof Error) return true;
-  if (result?.isError === true) return true;
-  if (typeof result?.type === "string" && /error/i.test(result.type)) return true;
-  const text = typeof result === "string"
-    ? result
-    : typeof result?.text === "string"
-      ? result.text
-      : typeof result?.content === "string"
-        ? result.content
-        : "";
-  return /did not match expected schema|invalid|error/i.test(text) && /2027-02-29|schema|date/i.test(text);
+  if (result.isError === true) return true;
+  if (typeof result.type === "string" && /error/i.test(result.type)) return true;
+  return false;
 }
 
 export function schemaRefusalText(errorOrResult) {

@@ -52,5 +52,8 @@ test("invalid formationDate 2027-02-29 is refused by the existing tool schema", 
   }
   const text = schemaRefusalText(outcome);
   assert.equal(threw || isToolError(outcome), true);
-  assert.match(text, /schema|invalid|date|2027-02-29/i);
+  if (!threw) {
+    assert.equal(outcome.isError, true);
+  }
+  assert.match(text, /Invalid ISO date|Invalid arguments|did not match expected schema/i);
 });
