@@ -1,0 +1,10 @@
+[project]
+name = "ein-llc-crewai-adapter"
+version = "0.0.0"
+description = "CrewAI adapter for the four public ein-llc 0.3 local MCP tools"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = [
+  "crewai-tools[mcp]==1.15.45",
+]
