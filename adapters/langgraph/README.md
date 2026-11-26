@@ -81,12 +81,19 @@ mismatch text `Received tool input did not match expected schema`.
 
 ## Tests
 
+Adapter checks live at `checks/adapter.checks.mjs`, outside Node's default
+`node --test` globs, so a root-only `npm ci` followed by the root `npm test`
+(`node --test`) does not load them. The root package does not install this
+adapter's LangChain dependencies. Run the checks from this directory after
+`npm install` here:
+
 ```sh
 cd adapters/langgraph
 npm test
 ```
 
-The tests make a real stdio call for the Delaware May 31 case and assert the
+That script runs `node --test checks/adapter.checks.mjs` explicitly. The
+checks make a real stdio call for the Delaware May 31 case and assert the
 existing invalid-date refusal. They do not invent fees or require a network
 account.
 

@@ -14,7 +14,7 @@
   },
   "scripts": {
     "example": "node example.mjs",
-    "test": "node --test test/adapter.test.mjs"
+    "test": "node --test checks/adapter.checks.mjs"
   },
   "dependencies": {
     "@langchain/core": "1.5.1",
